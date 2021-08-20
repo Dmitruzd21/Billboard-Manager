@@ -18,7 +18,34 @@ public class Manager {
 
     }
 
-    //Удаление фильма
+    // Возвращает массив всех хранящихся в массиве объектов (в обратном порядке)
+    private int numberOfDisplayedFilms = 10;
+
+    public Manager(int numberOfDisplayedFilms) {
+        this.numberOfDisplayedFilms = numberOfDisplayedFilms;
+    }
+
+    public Manager() {
+        this.numberOfDisplayedFilms = numberOfDisplayedFilms;
+    }
+
+
+    public Film[] findLessOrEqual10() {
+        int resultLength;
+        if (films.length < numberOfDisplayedFilms) {
+            resultLength = films.length;
+        } else {
+            resultLength = numberOfDisplayedFilms;
+        }
+        Film[] result = new Film[resultLength];
+        for (int i = 0; i < resultLength; i++) {
+            int index = resultLength - 1 - i;
+            result[i] = films[index];
+        }
+        return result;
+    }
+
+    // ***Удаление фильма
     public void removeById(int id) {
         Film[] tmp2 = new Film[films.length - 1];
         int index = 0;
@@ -31,28 +58,31 @@ public class Manager {
         films = tmp2;
     }
 
-
-    //Возвращает массив всех хранящихся в массиве объектов (в обратном порядке)
-    //public Film[] findAll () {
-
-    // return
-    // }
-
-    private int numberOfDisplayedFilms = 10;
-
-    public Manager(int numberOfDisplayedFilms) {
-        this.numberOfDisplayedFilms = numberOfDisplayedFilms;
+    // ***Возвращает весь массив в прямом порядке
+    public Film[] findAll() {
+        Film[] result = new Film[films.length];
+        for (int i = 0; i < films.length; i++) {
+            result[i] = films[i];
+        }
+        return result;
     }
 
-    public Manager() {
-        this.numberOfDisplayedFilms = numberOfDisplayedFilms;
+    // ***Возвращает массив всех хранящихся в массиве объектов (в обратном порядке)
+    public Film[] findAllInReverse() {
+        Film[] result = new Film[films.length];
+        for (int i = 0; i < films.length; i++) {
+            int index = films.length - 1 - i;
+            result[i] = films[index];
+        }
+        return result;
     }
 
-
-    public void returFilmsInReverseOrder() {
-
+    // ***Полное удаление элементов репозитория
+    public Film[] removeAll() {
+        Film[] empty = new Film[0];
+        films = empty;
+        return films;
     }
-
 
 }
 
@@ -73,62 +103,6 @@ public class Manager {
 // Film f14 = new Film(14, "Главный Герой", "фантастика", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
 // Film f15 = new Film(15, "Бросок Кобры", "фантастика", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
 
-//  String[] films = new String[15];
-// films[0] =films.f1;
-//  films[1] = "f2";
-//  films[2] = "f3";
-//  films[3] = "f4";
-//  films[4] = "f5";
-//  films[5] = "f6";
-//  films[6] = "f7";
-//   films[7] = "f8";
-// films[8] = "f9";
-//  films[9] = "f10";
-//  films[10] = "f11";
-//   films[11] = "f12";
-//  films[12] = "f13";
-//  films[13] = "f14";
-//  films[14] = "f15";
-
-// Добавление фильма
-
-//public void addNewFilm (films);
-// String newFilm = "f16";
-// String[] tmp = new String[films.length + 1];
-// for (int i = 0; i < films.length; i++) {
-//      tmp[i] = films[i];
-//  }
-//  tmp[tmp.length - 1] = newFilm;
-//  films = tmp;
-
-
-//Выдать фильмы в обратном порядке
-
-
-//Удаление фильма
-
-// String removeFilm = "f3";
-// String[] tmp2 = new String[films.length - 1];
-// int index = 0;
-//   for (String film : films) {
-//   if (!film.equals(removeFilm)) {
-//       tmp[index] = film;
-//      index++;
-//   }
-// }
-// films = tmp2;
-
-// private int numberOfDisplayedFilms = 10;
-
-//  public Manager(int numberOfDisplayedFilms) {
-//      this.numberOfDisplayedFilms = numberOfDisplayedFilms;
-//  }
-
-//    public Manager() {
-//      this.numberOfDisplayedFilms = numberOfDisplayedFilms;
-
-
 //System.arraycopy (items,0,tmp, 0, items.length)
 //(из какого массива, с какого места, куда копировать,с какого места всавлять, количество элементов которые хотим скопировать)
-//}
 
