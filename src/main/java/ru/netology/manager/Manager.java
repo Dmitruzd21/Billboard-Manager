@@ -1,8 +1,7 @@
-package ru.netology;
+package ru.netology.manager;
 
 import com.sun.tools.javac.Main;
-import ru.netology.Manager;
-import ru.netology.domain.Film;
+import ru.netology.Film;
 
 public class Manager {
     private Film[] films = new Film[0];

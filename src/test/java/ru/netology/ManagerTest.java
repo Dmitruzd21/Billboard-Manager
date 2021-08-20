@@ -1,7 +1,8 @@
 package ru.netology;
 
 import org.junit.jupiter.api.Test;
-import ru.netology.domain.Film;
+import ru.netology.Film;
+import ru.netology.manager.Manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
