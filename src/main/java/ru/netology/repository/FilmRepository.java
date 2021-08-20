@@ -1,6 +1,6 @@
 package ru.netology.repository;
 
-import ru.netology.domain.Film;
+import ru.netology.Film;
 
 public class FilmRepository {
     private Film[] films = new Film[0];

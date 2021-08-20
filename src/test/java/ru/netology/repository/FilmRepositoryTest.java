@@ -1,7 +1,8 @@
 package ru.netology.repository;
 
 import org.junit.jupiter.api.Test;
-import ru.netology.domain.Film;
+import ru.netology.Film;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,66 +54,6 @@ class FilmRepositoryTest {
         Film[] actual = repository.findAll();
         assertArrayEquals(expected, actual);
     }
-
-    //Проверка выдачи последних 10 добавленных фильмов обратном порядке или сколько есть
-    //  @Test
-    // public void shouldFindLessOrEqual10If9() {
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //    manager.save(f4);
-    //      manager.save(f5);
-    //    manager.save(f6);
-    //    manager.save(f7);
-    //    manager.save(f8);
-    //    manager.save(f9);
-    //     Film[] expected = new Film[]{f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //     Film[] actual = manager.findLessOrEqual10();
-    //      assertArrayEquals(expected, actual);
-    //  }
-
-    //   @Test
-    //  public void shouldFindLessOrEqual10IfEqual10() {
-    //      manager.save(f1);
-    //      manager.save(f2);
-    //      manager.save(f3);
-    //      manager.save(f4);
-    //      manager.save(f5);
-    //      manager.save(f6);
-    //      manager.save(f7);
-    //     manager.save(f8);
-    //     manager.save(f9);
-    //      manager.save(f10);
-    //       Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //       Film[] actual = manager.findLessOrEqual10();
-    //       assertArrayEquals(expected, actual);
-    //   }
-
-    //  @Test
-    //  public void shouldFindLessOrEqual10If11() {
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //     manager.save(f4);
-    //     manager.save(f5);
-    //     manager.save(f6);
-    //     manager.save(f7);
-    //     manager.save(f8);
-    //     manager.save(f9);
-    //    manager.save(f10);
-    //     manager.save(f11);
-    //    Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //    Film[] actual = manager.findLessOrEqual10();
-    //     assertArrayEquals(expected, actual);
-    //  }
-
-    //   @Test
-    //  public void shouldFindLessOrEqual10IfNoOneExist() {
-    //     Film[] expected = new Film[0];
-    //     Film[] actual = manager.findLessOrEqual10();
-    //      assertArrayEquals(expected, actual);
-
-    //   }
 
     //  Проверка возвращения объекта по идентификатору (либо null, если такого объекта нет)
     @Test

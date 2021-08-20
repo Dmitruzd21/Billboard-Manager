@@ -1,8 +1,6 @@
-package ru.netology.domain.manager;
+package ru.netology.manager;
 
-import com.sun.tools.javac.Main;
-import ru.netology.domain.manager.Manager;
-import ru.netology.domain.Film;
+import ru.netology.Film;
 import ru.netology.repository.FilmRepository;
 
 public class Manager {

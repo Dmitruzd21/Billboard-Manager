@@ -1,16 +1,22 @@
 package ru.netology;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import ru.netology.domain.Film;
-import ru.netology.domain.manager.Manager;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.netology.manager.Manager;
 import ru.netology.repository.FilmRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ManagerTest {
-    private FilmRepository repository = Mockito.mock(FilmRepository.class);
-    private Manager manager = new Manager(repository);
+@ExtendWith(MockitoExtension.class)
+public class ManagerTest {
+    @Mock
+    private FilmRepository repository;
+    @InjectMocks
+    private Manager manager;
     Film f1 = new Film(1, "Бладшот", "боевик", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f2 = new Film(2, "Вперед", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f3 = new Film(3, "Отель Белград", "комедия", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
@@ -23,223 +29,54 @@ class ManagerTest {
     Film f10 = new Film(10, "Кунгфу Панда 3", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f11 = new Film(11, "Шрек", "боевик", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
 
-
-    //Проверка добавления фильма
-    //@Test
-    // public void shouldSaveIfNoOneFilmsExist() {
-    //   Manager manager = new Manager();
-    //   manager.save(f1);
-    //   Film[] expected = new Film[]{f1};
-    //   Film[] actual = manager.findAll();
-    //   assertArrayEquals(expected, actual);
-    //  }
-
-    //  @Test
-    //   public void shouldSaveIfSomeFilmsExist() {
-    //      Manager manager = new Manager();
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //     Film[] expected = new Film[]{f1, f2, f3};
-    //     Film[] actual = manager.findAll();
-    //     assertArrayEquals(expected, actual);
-    // }
-
-    //  @Test
-    //  public void shouldSaveIfTheSameFilmExist() {
-    //      Manager manager = new Manager();
-    //     Film f1 = new Film(1, "Бладшот", "боевик", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-    //     Film f2 = new Film(2, "Вперед", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-    //     Film f3 = new Film(3, "Отель Белград", "комедия", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-    //     Film f4 = new Film(3, "Отель Белград", "комедия", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //      manager.save(f4);
-    //     Film[] expected = new Film[]{f1, f2, f3, f4};
-    //     Film[] actual = manager.findAll();
-    //     assertArrayEquals(expected, actual);
-    //  }
-
     //Проверка выдачи последних 10 добавленных фильмов обратном порядке или сколько есть
-    //  @Test
-    // public void shouldFindLessOrEqual10If9() {
-    //     Manager manager = new Manager();
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //    manager.save(f4);
-    //      manager.save(f5);
-    //    manager.save(f6);
-    //    manager.save(f7);
-    //    manager.save(f8);
-    //    manager.save(f9);
-    //     Film[] expected = new Film[]{f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //     Film[] actual = manager.findLessOrEqual10();
-    //      assertArrayEquals(expected, actual);
-    //  }
+    @Test
+    public void shouldFindLessOrEqual10If9() {
+        //настройка заглушки
+        Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9};
+        Mockito.doReturn(returned).when(repository).findAll();
+        Film[] expected = new Film[]{f9, f8, f7, f6, f5, f4, f3, f2, f1};
+        Film[] actual = manager.findLessOrEqual10();
+        assertArrayEquals(expected, actual);
+        //удостоверяемся, что заглушка была вызвана
+        Mockito.verify(repository).findAll();
+    }
 
-    //   @Test
-    //  public void shouldFindLessOrEqual10IfEqual10() {
-    //      Manager manager = new Manager();
-    //      manager.save(f1);
-    //      manager.save(f2);
-    //      manager.save(f3);
-    //      manager.save(f4);
-    //      manager.save(f5);
-    //      manager.save(f6);
-    //      manager.save(f7);
-    //     manager.save(f8);
-    //     manager.save(f9);
-    //      manager.save(f10);
-    //       Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //       Film[] actual = manager.findLessOrEqual10();
-    //       assertArrayEquals(expected, actual);
-    //   }
+    @Test
+    public void shouldFindLessOrEqual10IfEqual10() {
+        //настройка заглушки
+        Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9, f10};
+        Mockito.doReturn(returned).when(repository).findAll();
+        Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
+        Film[] actual = manager.findLessOrEqual10();
+        assertArrayEquals(expected, actual);
+        //удостоверяемся, что заглушка была вызвана
+        Mockito.verify(repository).findAll();
+    }
 
-    //  @Test
-    //  public void shouldFindLessOrEqual10If11() {
-    //     Manager manager = new Manager();
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //     manager.save(f4);
-    //     manager.save(f5);
-    //     manager.save(f6);
-    //     manager.save(f7);
-    //     manager.save(f8);
-    //     manager.save(f9);
-    //    manager.save(f10);
-    //     manager.save(f11);
-    //    Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //    Film[] actual = manager.findLessOrEqual10();
-    //     assertArrayEquals(expected, actual);
-    //  }
+    @Test
+    public void shouldFindLessOrEqual10If11() {
+        //настройка заглушки
+        Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11};
+        Mockito.doReturn(returned).when(repository).findAll();
+        Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
+        Film[] actual = manager.findLessOrEqual10();
+        assertArrayEquals(expected, actual);
+        //удостоверяемся, что заглушка была вызвана
+        Mockito.verify(repository).findAll();
+    }
 
-    //   @Test
-    //  public void shouldFindLessOrEqual10IfNoOneExist() {
-    //      Manager manager = new Manager();
-    //     Film[] expected = new Film[0];
-    //     Film[] actual = manager.findLessOrEqual10();
-    //      assertArrayEquals(expected, actual);
 
-    //   }
+    @Test
+    public void shouldFindLessOrEqual10IfNoOneExist() {
+        Film[] returned = new Film[]{};
+        Mockito.doReturn(returned).when(repository).findAll();
+        Film[] expected = new Film[0];
+        Film[] actual = manager.findLessOrEqual10();
+        assertArrayEquals(expected, actual);
+        //удостоверяемся, что заглушка была вызвана
+        Mockito.verify(repository).findAll();
 
-    //  Проверка возвращения объекта по идентификатору (либо null, если такого объекта нет)
-    //   @Test
-    //  public void shoildfindByIdIfIdExist() {
-    //      Manager manager = new Manager();
-    //      manager.save(f1);
-    //     manager.save(f2);
-    //     manager.save(f3);
-    //     manager.save(f4);
-    //    manager.save(f5);
-    //    Film[] expected = new Film[]{f3};
-    //      Film[] actual = manager.findById(3);
-    //      assertArrayEquals(expected, actual);
-    //  }
-
-    //  @Test
-    //  public void shoildfindByIdIfIdNoExist() {
-    //       Manager manager = new Manager();
-    //      manager.save(f1);
-    //      manager.save(f2);
-    //     manager.save(f4);
-    //     manager.save(f5);
-    //     Film[] expected = new Film[]{null};
-    //     Film[] actual = manager.findById(3);
-    //     assertArrayEquals(expected, actual);
-    // }
-
-    //Проверка удаления объекта по идентификатору
-    //  @Test
-    //  public void shouldRemoveByIdIfManyFilmsExist() {
-    //     Manager manager = new Manager();
-    //    manager.save(f1);
-    //    manager.save(f2);
-    //    manager.save(f3);
-    //    manager.save(f4);
-    //    manager.save(f5);
-    //     manager.save(f6);
-    //     manager.save(f7);
-    //     manager.removeById(4);
-    //      Film[] expected = new Film[]{f1, f2, f3, f5, f6, f7};
-    //     Film[] actual = manager.findAll();
-    //      assertArrayEquals(expected, actual);
-    //  }
-
-    //  @Test
-    // public void shouldRemoveByIdIfOneFilmExist() {
-    //     Manager manager = new Manager();
-    //     manager.save(f1);
-    //     manager.removeById(1);
-    //     Film[] expected = new Film[0];
-    //     Film[] actual = manager.findAll();
-    //     assertArrayEquals(expected, actual);
-    // }
-
-    //Проверка полного очищения репозитория
-    //  @Test
-    //  public void shouldRemoveAll() {
-    //     Manager manager = new Manager();
-    //    manager.save(f1);
-    //    manager.save(f2);
-    //    manager.save(f3);
-    //    manager.save(f4);
-    //    manager.save(f5);
-    //    manager.save(f6);
-    //    manager.save(f7);
-    //     manager.save(f8);
-    //      manager.save(f9);
-    //     manager.removeAll();
-    //     Film[] expected = new Film[0];
-    //     Film[] actual =manager.findAll();
-    //     assertArrayEquals(expected, actual);
-    // }
-
-    // @Test
-    // public void shouldRemoveAllIfNoOneExist() {
-    //     Manager manager = new Manager();
-    //    manager.removeAll();
-    //    Film[] expected = new Film[0];
-    //    Film[] actual = manager.findAll();
-    //     assertArrayEquals(expected, actual);
-    // }
-
-//НЕТ В ДЗ!!! Проверка возвращения всех элементов массива в прямом порядке
-    //  @Test
-    //  public void shouldFindAllInReverseIfManyFilmsExist() {
-    //     Manager manager = new Manager();
-    //     manager.save(f1);
-    //     manager.save(f2);
-    //    manager.save(f3);
-    //    manager.save(f4);
-    //    manager.save(f5);
-    //     manager.save(f6);
-    //    manager.save(f7);
-    //    manager.save(f8);
-    //    manager.save(f9);
-    //    Film[] expected = new Film[]{f9, f8, f7, f6, f5, f4, f3, f2, f1};
-    //    Film[] actual = manager.findAllInReverse();
-    //    assertArrayEquals(expected, actual);
-    //  }
-
-    //  @Test
-    //  public void shouldFindAllInReverseIfOneExist() {
-    //   Manager manager = new Manager();
-    //   manager.save(f1);
-    //   Film[] expected = new Film[]{f1};
-    //   Film[] actual = manager.findAllInReverse();
-    //   assertArrayEquals(expected, actual);
-
-    // }
-
-    //   @Test
-    //  public void shouldFindAllInReverseIfNoOneExist() {
-    //      Manager manager = new Manager();
-    //      Film[] expected = new Film[0];
-    //      Film[] actual = manager.findAllInReverse();
-    //      assertArrayEquals(expected, actual);
-    //   }
-
+    }
 }
+
