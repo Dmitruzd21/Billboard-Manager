@@ -36,13 +36,10 @@ public class Manager {
         this.numberOfDisplayedFilms = numberOfDisplayedFilms;
     }
 
-    public Manager() {
-        this.numberOfDisplayedFilms = numberOfDisplayedFilms;
-    }
 
-    // Возвращает массив всех хранящихся в массиве объектов (в обратном порядке)
+    // Возвращает фиксированное количество хранящихся в массиве объектов (в обратном порядке)
 
-    public Film[] findLessOrEqual10() {
+    public Film[] findLessOrEqualFixedAmount() {
        Film [] films = repository.findAll();
         int resultLength;
         if (films.length < numberOfDisplayedFilms) {
@@ -51,9 +48,9 @@ public class Manager {
             resultLength = numberOfDisplayedFilms;
         }
         Film[] result = new Film[resultLength];
-        for (int i = 0; i < resultLength; i++) {
-            int index = resultLength - 1 - i;
-            result[i] = films[index];
+        for (int i = films.length-resultLength; i < films.length; i++) {
+            int index = films.length - i + (films.length-resultLength-1);
+            result[i-(films.length-resultLength)] = films[index];
         }
         return result;
     }

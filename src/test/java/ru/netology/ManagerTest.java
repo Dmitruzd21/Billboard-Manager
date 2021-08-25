@@ -27,7 +27,9 @@ public class ManagerTest {
     Film f8 = new Film(8, "Кунгфу Панда", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f9 = new Film(9, "Кунгфу Панда 2", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f10 = new Film(10, "Кунгфу Панда 3", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-    Film f11 = new Film(11, "Шрек", "боевик", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
+    Film f11 = new Film(11, "Шрек", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
+    Film f12 = new Film(11, "Шрек 2", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
+    Film f13 = new Film(11, "Шрек 3", "мультфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
 
     //Проверка выдачи последних 10 добавленных фильмов обратном порядке или сколько есть
     @Test
@@ -36,7 +38,7 @@ public class ManagerTest {
         Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9};
         Mockito.doReturn(returned).when(repository).findAll();
         Film[] expected = new Film[]{f9, f8, f7, f6, f5, f4, f3, f2, f1};
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
         //удостоверяемся, что заглушка была вызвана
         Mockito.verify(repository).findAll();
@@ -48,7 +50,7 @@ public class ManagerTest {
         Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9, f10};
         Mockito.doReturn(returned).when(repository).findAll();
         Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
         //удостоверяемся, что заглушка была вызвана
         Mockito.verify(repository).findAll();
@@ -59,20 +61,43 @@ public class ManagerTest {
         //настройка заглушки
         Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11};
         Mockito.doReturn(returned).when(repository).findAll();
-        Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] expected = new Film[]{f11, f10, f9, f8, f7, f6, f5, f4, f3, f2};
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
         //удостоверяемся, что заглушка была вызвана
         Mockito.verify(repository).findAll();
     }
 
+    @Test
+    public void shouldFindLessOrEqual10If12() {
+        //настройка заглушки
+        Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12};
+        Mockito.doReturn(returned).when(repository).findAll();
+        Film[] expected = new Film[]{f12, f11, f10, f9, f8, f7, f6, f5, f4, f3};
+        Film[] actual = manager.findLessOrEqualFixedAmount();
+        assertArrayEquals(expected, actual);
+        //удостоверяемся, что заглушка была вызвана
+        Mockito.verify(repository).findAll();
+    }
+
+    @Test
+    public void shouldFindLessOrEqual10If13() {
+        //настройка заглушки
+        Film[] returned = new Film[]{f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13};
+        Mockito.doReturn(returned).when(repository).findAll();
+        Film[] expected = new Film[]{f13, f12, f11, f10, f9, f8, f7, f6, f5, f4};
+        Film[] actual = manager.findLessOrEqualFixedAmount();
+        assertArrayEquals(expected, actual);
+        //удостоверяемся, что заглушка была вызвана
+        Mockito.verify(repository).findAll();
+    }
 
     @Test
     public void shouldFindLessOrEqual10IfNoOneExist() {
         Film[] returned = new Film[]{};
         Mockito.doReturn(returned).when(repository).findAll();
         Film[] expected = new Film[0];
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
         //удостоверяемся, что заглушка была вызвана
         Mockito.verify(repository).findAll();
