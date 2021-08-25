@@ -36,6 +36,8 @@ public class Manager {
         this.numberOfDisplayedFilms = numberOfDisplayedFilms;
     }
 
+    public Manager() {
+    }
 
     // Возвращает фиксированное количество хранящихся в массиве объектов (в обратном порядке)
 
