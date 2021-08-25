@@ -17,9 +17,9 @@ class ManagerTest {
     Film f8 = new Film(8, "Кунгфу Панда", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f9 = new Film(9, "Кунгфу Панда 2", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     Film f10 = new Film(10, "Кунгфу Панда 3", "мульфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-    Film f11 = new Film(11, "Шрек", "боевик", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
-
-
+    Film f11 = new Film(11, "Шрек", "мультфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
+    Film f12 = new Film(12, "Шрек 2", "мультфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
+    Film f13 = new Film(13, "Шрек 3", "мультфильм", "https://github.com/netology-code/javaqa-homeworks/blob/master/dependency/pic/afisha.png", false);
     //Проверка добавления фильма
     @Test
     public void shouldSaveIfNoOneFilmsExist() {
@@ -71,7 +71,7 @@ class ManagerTest {
         manager.save(f8);
         manager.save(f9);
         Film[] expected = new Film[]{f9, f8, f7, f6, f5, f4, f3, f2, f1};
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
     }
 
@@ -89,12 +89,12 @@ class ManagerTest {
         manager.save(f9);
         manager.save(f10);
         Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldFindLessOrEqual10If11() {
+    public void shouldFindLessOrEqual10If12() {
         Manager manager = new Manager();
         manager.save(f1);
         manager.save(f2);
@@ -107,8 +107,30 @@ class ManagerTest {
         manager.save(f9);
         manager.save(f10);
         manager.save(f11);
-        Film[] expected = new Film[]{f10, f9, f8, f7, f6, f5, f4, f3, f2, f1};
-        Film[] actual = manager.findLessOrEqual10();
+        manager.save(f12);
+        Film[] expected = new Film[]{f12, f11, f10, f9, f8, f7, f6, f5, f4, f3};
+        Film[] actual = manager.findLessOrEqualFixedAmount();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindLessOrEqual10If13() {
+        Manager manager = new Manager();
+        manager.save(f1);
+        manager.save(f2);
+        manager.save(f3);
+        manager.save(f4);
+        manager.save(f5);
+        manager.save(f6);
+        manager.save(f7);
+        manager.save(f8);
+        manager.save(f9);
+        manager.save(f10);
+        manager.save(f11);
+        manager.save(f12);
+        manager.save(f13);
+        Film[] expected = new Film[]{f13, f12, f11, f10, f9, f8, f7, f6, f5, f4};
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
     }
 
@@ -116,7 +138,7 @@ class ManagerTest {
     public void shouldFindLessOrEqual10IfNoOneExist() {
         Manager manager = new Manager();
         Film[] expected = new Film[0];
-        Film[] actual = manager.findLessOrEqual10();
+        Film[] actual = manager.findLessOrEqualFixedAmount();
         assertArrayEquals(expected, actual);
 
     }

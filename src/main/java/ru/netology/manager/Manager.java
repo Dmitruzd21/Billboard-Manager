@@ -27,9 +27,9 @@ public class Manager {
 
     }
 
-    // Возвращает массив всех хранящихся в массиве объектов (в обратном порядке)
+    // Возвращает массив только фиксированное количество хранящихся в массиве объектов (в обратном порядке)
 
-    public Film[] findLessOrEqual10() {
+    public Film[] findLessOrEqualFixedAmount() {
         int resultLength;
         if (films.length < numberOfDisplayedFilms) {
             resultLength = films.length;
@@ -37,9 +37,9 @@ public class Manager {
             resultLength = numberOfDisplayedFilms;
         }
         Film[] result = new Film[resultLength];
-        for (int i = 0; i < resultLength; i++) {
-            int index = resultLength - 1 - i;
-            result[i] = films[index];
+        for (int i = films.length-resultLength; i < films.length; i++) {
+            int index = films.length - i + (films.length-resultLength-1);
+            result[i-(films.length-resultLength)] = films[index];
         }
         return result;
     }
@@ -95,6 +95,8 @@ public class Manager {
         }
         return result;
     }
+
+
 }
 //System.arraycopy (items,0,tmp, 0, items.length)
 //(из какого массива, с какого места, куда копировать,с какого места всавлять, количество элементов которые хотим скопировать)
