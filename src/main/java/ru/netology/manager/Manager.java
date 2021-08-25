@@ -12,7 +12,6 @@ public class Manager {
     }
 
     public Manager() {
-        this.numberOfDisplayedFilms = numberOfDisplayedFilms;
     }
 
 
@@ -27,7 +26,7 @@ public class Manager {
 
     }
 
-    // Возвращает массив только фиксированное количество хранящихся в массиве объектов (в обратном порядке)
+    // Возвращает только фиксированное количество хранящихся в массиве объектов (в обратном порядке)
 
     public Film[] findLessOrEqualFixedAmount() {
         int resultLength;
